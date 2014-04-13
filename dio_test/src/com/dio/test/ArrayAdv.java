@@ -83,6 +83,25 @@ public class ArrayAdv {
         return false;
     }
 
+    /**
+     * Bubble method sort
+     * @param arr source array
+     * @return sorted array
+     */
+    public static String[] sort(String[] arr) {
+        int i = 1;
+        int j;
+        String temp;
+        while (i < arr.length) {
+            if (arr[i].compareToIgnoreCase(arr[i-1]) < 0) {
+                temp = arr[i];
+                arr[i] = arr[i-1];
+                arr[i-1] = temp;
+                if (i > 1) i--;
+            } else i++;
+        }
+        return arr;
+    }
 
 }
 

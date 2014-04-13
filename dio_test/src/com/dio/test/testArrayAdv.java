@@ -21,6 +21,9 @@ public class testArrayAdv {
 
         System.out.println("Outer merge type:");
         printArr(ArrayAdv.joinArr(a1, a2, arrMergeType.OUTER));
+
+        System.out.println("Sort distinct array:");
+        printArr(ArrayAdv.sort(ArrayAdv.joinArr(a1, a2, arrMergeType.DISTINCT)));
     }
 
 
