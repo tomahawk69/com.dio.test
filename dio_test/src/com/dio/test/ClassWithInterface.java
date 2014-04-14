@@ -46,7 +46,7 @@ public class ClassWithInterface implements TestInterface {
     }
 
 
-    @Override
+    //@Override
     public int testDef() {
         System.out.println("Overrided");
         return 0;

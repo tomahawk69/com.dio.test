@@ -11,6 +11,7 @@ public interface TestInterface {
     public void copyStatus(TestInterface source);
     public int getStatus();
     public void setStatus(int newStatus);
+    /*
     static void testDefault() {
         System.out.println("Default method");
     }
@@ -19,7 +20,7 @@ public interface TestInterface {
         testDefault();
         return 0;
     }
-
+    */
     public enum testEnum {
         INIT,
         FIRST,
