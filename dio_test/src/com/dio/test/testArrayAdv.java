@@ -4,6 +4,8 @@
  */
 package com.dio.test;
 
+import java.util.Arrays;
+
 public class testArrayAdv {
     public static void main(String[] args) {
 
@@ -21,6 +23,7 @@ public class testArrayAdv {
 
         System.out.println("Outer merge type:");
         printArr(ArrayAdv.joinArr(a1, a2, arrMergeType.OUTER));
+        System.out.println(Arrays.toString(ArrayAdv.joinArr(a1, a2, arrMergeType.OUTER)));
 
         System.out.println("Sort distinct array:");
         printArr(ArrayAdv.sort(ArrayAdv.joinArr(a1, a2, arrMergeType.DISTINCT)));

@@ -86,6 +86,10 @@ public class ClassWithInterface implements TestInterface {
     @Override
     public void setStatus(int newStatus) {
         this.sstatus = newStatus;
-        this.estatus = testEnum.values()[this.sstatus];
+        this.estatus = testEnum.typeOf(this.sstatus);
+    }
+    public void setStatus(testEnum newStatus) {
+        //this.sstatus = newStatus;
+        //this.estatus = testEnum.values()[this.sstatus];
     }
 }

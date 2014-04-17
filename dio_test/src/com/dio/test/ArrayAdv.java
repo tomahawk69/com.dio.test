@@ -6,6 +6,25 @@ package com.dio.test;
  */
 public class ArrayAdv {
 
+    /**
+     * FULL join odf arrays
+     * without duplicates check
+     * @param arr1 first array
+     * @param arr2 second array
+     * @return resulting array
+     */
+    public static  String[] joinArrFull(String[] arr1, String[] arr2) {
+        String[] result = new String[arr1.length + arr2.length];
+        // copy first array
+        System.arraycopy(arr1, 0, result, 0, arr1.length);
+        // copy second array
+        // we do not check if it is the same arrays as first
+        System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
+        return result;
+    }
+
+
+
     /*
     * Join two arrays in a very straightforward way
     * Joins can be:
@@ -65,7 +84,6 @@ public class ArrayAdv {
         return realResult;
     }
 
-
     /*
     * Check if not-null array of strings contains specified string value.
     * There is small tune -
@@ -77,8 +95,10 @@ public class ArrayAdv {
         if (arr != null)
             for (String s : arr) {
                 if (s == null) break;
-                if (search.toLowerCase().equals(s.toLowerCase()))
+                if (search.equalsIgnoreCase(s))
                     return true;
+                if (search.compareTo(s) < 0)
+                    break;
             }
         return false;
     }

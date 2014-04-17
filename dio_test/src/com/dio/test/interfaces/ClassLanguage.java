@@ -5,6 +5,7 @@ package com.dio.test.interfaces;
  * abstract language class
  */
 abstract public class ClassLanguage implements Language {
+    protected String stringSymbol;
     @Override
     public String asString() {
         return "AbstractClass";

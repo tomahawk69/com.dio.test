@@ -22,10 +22,25 @@ public interface TestInterface {
     }
     */
     public enum testEnum {
-        INIT,
-        FIRST,
-        SECOND,
-        THIRD,
-        FOURTH
+        INIT(0),
+        FIRST(1),
+        SECOND(2),
+        THIRD(3),
+        FOURTH(4);
+        private final int state;
+        testEnum(int state) {
+            this.state = state;
+        }
+
+        public int getState() {
+            return state;
+        }
+        public static testEnum typeOf(int state) {
+            for (testEnum value : testEnum.values()) {
+                if (value.getState() == state)
+                    return value;
+            }
+            return null;
+        }
     }
 }

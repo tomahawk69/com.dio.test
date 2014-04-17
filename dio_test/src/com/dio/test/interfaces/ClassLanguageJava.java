@@ -7,6 +7,8 @@ public class ClassLanguageJava extends ClassLanguage {
     private static String COMMENT_STRING = "//";
     private static String REGEX_COMMENT_STRING = "//";
 
+    // base class method + param symbols
+
     public String toString() {
         return "Language Java";
     }
