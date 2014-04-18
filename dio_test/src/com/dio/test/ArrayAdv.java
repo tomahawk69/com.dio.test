@@ -2,7 +2,7 @@ package com.dio.test;
 
 /**
  * Created by yur on 13.04.2014.
- * Advanced operations with array
+ * Advanced array utilities
  */
 public class ArrayAdv {
 
@@ -23,70 +23,84 @@ public class ArrayAdv {
         return result;
     }
 
-
-
-    /*
-    * Join two arrays in a very straightforward way
-    * Joins can be:
-    * <ol>
-    * <li>FULL - include all elements from both arrays
-    * <LI>DISTINCT - include all distinct values from both arrays
-    * <li>INNER - include all distinct values that exist in both arrays
-    * <li>OUTER - include all distinct values that exist only in first or second array
-    * </ol>
-    * @param  arr1, arr2  not null arrays of strings
-    * @param  mergeType  type of join
-    * @return resulting array of strings
-    */
-    public static String[] joinArr(String[] arr1, String[] arr2, arrMergeType mergeType) {
-        String[] result = new String[arr1.length + arr2.length];
+    /**
+     * DISTINCT join of two arrays
+     * @param arr1
+     * @param arr2
+     * @return resulting array
+     */
+    public static  String[] joinArrDistinct(String[] arr1, String[] arr2) {
+        String[] temp = new String[arr1.length + arr2.length];
         int i = 0;
+        // initial sorting of two arrays
+        String[] a1 = sort(arr1), a2 = sort(arr2);
+        // scan first array
+        for (String s : a1)
+            if (!arrContains(temp, s))
+                temp[i++] = s;
+        // scan second array
+        for (String s : a2)
+            if (!arrContains(temp, s))
+                temp[i++] = s;
 
-        boolean allow;
-        for (String s : arr1) {
-            switch (mergeType) {
-                case FULL:
-                case DISTINCT:
-                    allow = true;
-                    break;
-                case INNER:
-                    allow = arrContains(arr2, s);
-                    break;
-                case OUTER:
-                    allow = !arrContains(arr2, s);
-                    break;
-                default:
-                    allow = false;
-                    break;
-            }
-            if (allow && (mergeType == arrMergeType.FULL || !arrContains(result, s)))
-                result[i++] = s;
-        }
+        String[] result = new String[i];
+        System.arraycopy(temp, 0, result, 0, i);
 
-        if (mergeType != arrMergeType.INNER)
-            for (String s : arr2) {
-                switch (mergeType) {
-                    case FULL:
-                    case DISTINCT:
-                        allow = true;
-                        break;
-                    case OUTER:
-                        allow = !arrContains(arr1, s);
-                        break;
-                    default:
-                        allow = false;
-                }
-                if (allow && (mergeType == arrMergeType.FULL || !arrContains(result, s)))
-                    result[i++] = s;
-            }
-        String[] realResult = new String[i];
-        System.arraycopy(result, 0, realResult, 0, i);
-        return realResult;
+        return result;
     }
+
+    /**
+     * INNER join of two arrays
+     * @param arr1
+     * @param arr2
+     * @return resulting array
+     */
+    public static  String[] joinArrInner(String[] arr1, String[] arr2) {
+        String[] temp = new String[arr1.length + arr2.length];
+        int i = 0;
+        // initial sorting of two arrays
+        String[] a1 = sort(arr1), a2 = sort(arr2);
+        // pass only first array
+        for (String s : a1)
+            if (arrContains(a2, s) && !arrContains(temp, s))
+                temp[i++] = s;
+
+        String[] result = new String[i];
+        System.arraycopy(temp, 0, result, 0, i);
+
+        return result;
+    }
+
+    /**
+     * OUTER join of two arrays
+     * @param arr1
+     * @param arr2
+     * @return resulting array
+     */
+    public static  String[] joinArrOuter(String[] arr1, String[] arr2) {
+        String[] temp = new String[arr1.length + arr2.length];
+        int i = 0;
+        // initial sorting of two arrays
+        String[] a1 = sort(arr1), a2 = sort(arr2);
+        // scan first array
+        for (String s : a1)
+            if (!arrContains(a2, s) && !arrContains(temp, s))
+                temp[i++] = s;
+        // scan second array
+        for (String s : a2)
+            if (!arrContains(a1, s) && !arrContains(temp, s))
+                temp[i++] = s;
+
+        String[] result = new String[i];
+        System.arraycopy(temp, 0, result, 0, i);
+
+        return result;
+    }
+
 
     /*
     * Check if not-null array of strings contains specified string value.
-    * There is small tune -
+    * Arrays should be sorted
     * @param  arr not null array of strings
     * @param  search  search value
     * @return true if value found or false otherwise
@@ -101,6 +115,44 @@ public class ArrayAdv {
                     break;
             }
         return false;
+    }
+
+    /**
+     * Remove dupes from array case-sensitive
+     * @param arr input array
+     * @return result sorted array
+     */
+    public static String[] removeDupes(String[] arr) {
+        String[] temp = new String[arr.length];
+        String value = "";
+        int i = 0;
+        for (String item : sort(arr) )
+            if (i == 0 || !value.equals(item)) {
+                temp[i++] = item;
+                value = item;
+            }
+        String[] result = new String[i];
+        System.arraycopy(temp, 0, result, 0, i);
+        return result;
+    }
+
+    /**
+     * Remove dupes from array case-insensitive
+     * @param arr input array
+     * @return result sorted array
+     */
+    public static String[] removeDupesIgnoreCase(String[] arr) {
+        String[] temp = new String[arr.length];
+        String value = "";
+        int i = 0;
+        for (String item : sort(arr) )
+            if (i == 0 || !value.equalsIgnoreCase(item)) {
+                temp[i++] = item;
+                value = item;
+            }
+        String[] result = new String[i];
+        System.arraycopy(temp, 0, result, 0, i);
+        return result;
     }
 
     /**
@@ -123,8 +175,4 @@ public class ArrayAdv {
         return arr;
     }
 
-}
-
-enum arrMergeType {
-    FULL, DISTINCT, INNER, OUTER
 }
