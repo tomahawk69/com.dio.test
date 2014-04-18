@@ -21,7 +21,6 @@ public class ArrayAdvTest extends BaseTest {
         // test full join
         rr = ArrayAdv.joinArrFull(a1, a2);
         re = new String[]{"Second", "First", "Last", "Zero", "First", "Third", "zero", "A"};
-        assertEquals(2, myClass.add(x,y));
         if (!Arrays.equals(rr, re)) {
             errorMessage("testJoinArrFull test 1", re, rr);
             result = false;
