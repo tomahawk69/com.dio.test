@@ -12,19 +12,19 @@ public class Lamp {
         this.state = 0;
     }
 
-    public void TurnOn() {
-        this.ChangeState(1);
+    public void turnOn() {
+        changeState(1);
     }
 
-    public void TurnOff() {
-        this.ChangeState(0);
+    public void turnOff() {
+        changeState(0);
     }
 
-    private void ChangeState(int newstate) {
+    private void changeState(int newstate) {
         this.state = newstate;
     }
 
-    public void State() {
+    public void state() {
         System.out.print("System is ");
         if (this.state == 1) {
             System.out.println("up");

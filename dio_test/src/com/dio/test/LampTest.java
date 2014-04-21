@@ -10,10 +10,10 @@ public class LampTest {
 
     public static void main(String[] args) {
         Lamp l1 = new Lamp();
-        l1.State();
-        l1.TurnOn();
-        l1.State();
-        l1.TurnOff();
-        l1.State();
+        l1.state();
+        l1.turnOn();
+        l1.state();
+        l1.turnOff();
+        l1.state();
     }
 }
