@@ -8,14 +8,18 @@ public class PojoPersonUtils {
 
     /**
      * Full join
+     * Considerate nulls in parameters
      * @param arr1 PojoPerson 1
      * @param arr2 PojoPerson 2
      * @return PojoPerson result
      */
     public static PojoPerson[] joinFull(PojoPerson[] arr1, PojoPerson[] arr2) {
-        PojoPerson[] result = new PojoPerson[arr1.length + arr2.length];
-        System.arraycopy(arr1, 0, result, 0, arr1.length);
-        System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
+        PojoPerson[] result = new PojoPerson[(arr1 == null ? 0 : arr1.length) +
+                (arr2 == null ? 0 : arr2.length)];
+        if (arr1 != null)
+            System.arraycopy(arr1, 0, result, 0, arr1.length);
+        if (arr2 != null)
+            System.arraycopy(arr2, 0, result, (arr1 == null ? 0 : arr1.length), arr2.length);
         return result;
     }
 
