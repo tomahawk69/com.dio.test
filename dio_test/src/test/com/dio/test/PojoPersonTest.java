@@ -1,40 +1,35 @@
 package test.com.dio.test;
-
-import com.dio.test.EnumJob;
 import com.dio.test.PojoPerson;
+import com.dio.test.EnumJob;
+
+import static org.junit.Assert.*;
+
 
 /**
- * Created by yur on 21.04.2014.
+ * Created by iovchynnikov on 4/22/14.
  */
-public class PojoPersonTest extends BaseTest {
-    public static void main(String[] args) {
-        PojoPerson o1 = new PojoPerson("Toma", null, "Hawk", EnumJob.QA);
-        o1.printInfo();
-        PojoPerson o11 = new PojoPerson("Toma", null, "Hawk");
-        o11.printInfo();
-        System.out.println("o1 == o11? - " + (o1 == o11));
-        System.out.println("o1 is equal o11? - " + o1.equals(o11));
-        System.out.println("o11 is equal o1? - " + o11.equals(o1));
+public class PojoPersonTest {
+    private PojoPerson o1, o2, o3;
 
+    @org.junit.Before
+    public void setUp() throws Exception {
+        o1 = new PojoPerson("Toma", null, "Hawk", EnumJob.QA);
+        o2 = new PojoPerson("Toma", null, "Hawk", null);
+        o3 = new PojoPerson("Toma", null, "Hawk", EnumJob.QA);
+    }
 
-        o11.setJob(o1.getJob());
-        o11.printInfo();
-        System.out.println("o1 == o11? - " + (o1 == o11));
-        System.out.println("o1 is equal o11? - " + o1.equals(o11));
-        System.out.println("o11 is equal o1? - " + o11.equals(o1));
+    @org.junit.Test
+    public void testEquals() throws Exception {
+        assertTrue("Objects must be equal", o1.equals(o3));
+    }
 
-        o1.setJob(null);
-        o11.setJob(o1.getJob());
-        o1.printInfo();
-        o11.printInfo();
-        System.out.println("o1 == o11? - " + (o1 == o11));
-        System.out.println("o1 is equal o11? - " + o1.equals(o11));
-        System.out.println("o11 is equal o1? - " + o11.equals(o1));
+    @org.junit.Test
+    public void testEqualsNegative() throws Exception {
+        assertFalse("Objects must not be equal", o1.equals(o2));
+    }
 
-        o11 = o1; // 011 and 01 now referenced the same object
-        o11.printInfo();
-        System.out.println("o1 == o11? - " + (o1 == o11));
-        System.out.println("o1 is equal o11? - " + o1.equals(o11));
-        System.out.println("o11 is equal o1? - " + o11.equals(o1));
+    @org.junit.Test
+    public void testToString() throws Exception {
+        assertEquals("PojoPerson{job=QA, nameMiddle='', nameLast='Hawk', nameFirst='Toma'}", o1.toString());
     }
 }

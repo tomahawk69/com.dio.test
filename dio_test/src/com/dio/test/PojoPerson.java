@@ -27,6 +27,7 @@ public class PojoPerson {
         System.out.println("Hashcode is " + hashCode());
     }
 
+
     public EnumJob getJob() {
         return job;
     }
