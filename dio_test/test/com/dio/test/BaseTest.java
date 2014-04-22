@@ -6,14 +6,17 @@ import java.util.Arrays;
  * Created by iovchynnikov on 4/18/14.
  */
 public class BaseTest {
-    protected static void errorMessage(String s, String re, String rr) throws TestNotPassedException {
-        System.out.println(s + " does not passed");
-        System.out.println("Expected: " + re);
-        System.out.println("Received: " + rr);
-        throw new TestNotPassedException(s + " does not passed");
+    protected static void errorMessage(String message, String resultExpected, String resultReceived) throws TestNotPassedException {
+        System.out.println(message + " does not passed");
+        System.out.println("Expected: " + resultExpected);
+        System.out.println("Received: " + resultReceived);
+        throw new TestNotPassedException(message + " does not passed");
     }
-    protected static void errorMessageArr(String s, Object[] re, Object[] rr) throws TestNotPassedException {
-        errorMessage(s, Arrays.toString(re), Arrays.toString(rr));
+    protected static void errorMessage(String message, boolean resultExpected, boolean resultReceived) throws TestNotPassedException {
+        errorMessage(message, resultExpected, resultReceived);
+    }
+    protected static void errorMessageArr(String message, Object[] resultExpected, Object[] resultReceived) throws TestNotPassedException {
+        errorMessage(message, Arrays.toString(resultExpected), Arrays.toString(resultReceived));
     }
 
 
