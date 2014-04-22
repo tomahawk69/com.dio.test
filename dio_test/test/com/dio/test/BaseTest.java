@@ -1,4 +1,4 @@
-package test.com.dio.test;
+package com.dio.test;
 import java.util.Arrays;
 
 /**

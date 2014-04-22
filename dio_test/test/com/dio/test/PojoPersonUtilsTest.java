@@ -1,9 +1,8 @@
-package test.com.dio.test;
+package com.dio.test;
 import com.dio.test.PojoPerson;
 import com.dio.test.PojoPersonUtils;
 import com.dio.test.EnumJob;
 
-import java.awt.datatransfer.SystemFlavorMap;
 import java.util.Arrays;
 
 
