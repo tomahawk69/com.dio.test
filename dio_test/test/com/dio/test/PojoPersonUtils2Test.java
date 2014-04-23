@@ -3,10 +3,12 @@ package com.dio.test;
 import java.util.Arrays;
 
 public class PojoPersonUtils2Test extends BaseTest {
-    private static PojoPersonUtils2 tester;
-    private static PojoPerson[] persons1, persons2;
+    private PojoPersonUtils2 tester;
+    private PojoPerson[] persons1, persons2;
 
-    public static void setUp() {
+    public void setUp() {
+        tester = new PojoPersonUtils2();
+
         String firstName = "First";
         String middleName = "Middle";
         String lastName = "Last";
@@ -24,7 +26,7 @@ public class PojoPersonUtils2Test extends BaseTest {
 
     }
 
-    public static boolean testJoinFull() throws TestNotPassedException {
+    public boolean testJoinFull() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
                 persons1[0],
@@ -42,7 +44,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testJoinDistinct() throws TestNotPassedException {
+    public boolean testJoinDistinct() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
                 persons1[0],
@@ -59,7 +61,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testJoinDistinctReverse() throws TestNotPassedException {
+    public boolean testJoinDistinctReverse() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
                 persons2[0],
@@ -76,7 +78,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testJoinInner() throws TestNotPassedException {
+    public boolean testJoinInner() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
                 persons1[1],
@@ -89,7 +91,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testJoinInnerNull() throws TestNotPassedException {
+    public boolean testJoinInnerNull() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
         };
@@ -101,7 +103,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testJoinOuter() throws TestNotPassedException {
+    public boolean testJoinOuter() throws TestNotPassedException {
         setUp();
         PojoPerson[] resultExpected = new PojoPerson[]{
                 persons1[0],
@@ -117,7 +119,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testContainsPositive() throws TestNotPassedException {
+    public boolean testContainsPositive() throws TestNotPassedException {
         setUp();
         boolean resultExpected = true;
         boolean resultReceived = tester.contains(persons1, persons1[1]);
@@ -128,7 +130,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testContainsNegative() throws TestNotPassedException {
+    public boolean testContainsNegative() throws TestNotPassedException {
         setUp();
         boolean resultExpected = false;
         boolean resultReceived = tester.contains(persons1, persons2[1]);
@@ -139,7 +141,7 @@ public class PojoPersonUtils2Test extends BaseTest {
         return true;
     }
 
-    public static boolean testContainsException() throws TestNotPassedException {
+    public boolean testContainsException() throws TestNotPassedException {
         setUp();
         boolean result = false;
         try {
@@ -156,59 +158,59 @@ public class PojoPersonUtils2Test extends BaseTest {
     }
 
     public static void main(String[] args) {
-        tester = new PojoPersonUtils2();
         boolean result = true;
+        PojoPersonUtils2Test test = new PojoPersonUtils2Test();
 
         try {
-            testJoinFull();
+            test.testJoinFull();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testJoinDistinct();
+            test.testJoinDistinct();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testJoinDistinctReverse();
+            test.testJoinDistinctReverse();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testJoinInner();
+            test.testJoinInner();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testJoinInnerNull();
+            test.testJoinInnerNull();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testJoinOuter();
+            test.testJoinOuter();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testContainsPositive();
+            test.testContainsPositive();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testContainsNegative();
+            test.testContainsNegative();
         }
         catch (TestNotPassedException e) {
             result = false;
         }
         try {
-            testContainsException();
+            test.testContainsException();
         }
         catch (TestNotPassedException e) {
             result = false;

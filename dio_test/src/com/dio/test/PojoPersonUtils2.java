@@ -64,10 +64,7 @@ public class PojoPersonUtils2 {
                 if (contains(arr2, s) && !contains(temp, s))
                     temp[i++] = s;
 
-        PojoPerson[] result = new PojoPerson[i];
-        System.arraycopy(temp, 0, result, 0, i);
-
-        return result;
+        return Arrays.copyOf(temp, i);
     }
 
     private PojoPerson[] scanOuter(PojoPerson[] source, PojoPerson[] other, PojoPerson[] previous) {
