@@ -1,7 +1,7 @@
 package com.dio.aifmd;
 
 import com.dio.test.PojoPerson;
-import com.sybase.jdbc4.jdbc.SybDriver;
+//import com.sybase.jdbc4.jdbc.SybDriver;
 //import org.;
 // TODO: add mybatis
 import java.sql.*;
@@ -11,7 +11,6 @@ import java.util.Arrays;
  * Created by iovchynnikov on 4/23/14.
  */
 public class DataConnect {
-    private static SybDriver sybDriver;
     private static Connection conn;
     private static String url, username, password;
 
