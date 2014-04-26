@@ -1,7 +1,7 @@
 package com.dio.aifmd;
 
 import com.dio.test.PojoPerson;
-import com.sybase.jdbc4.jdbc.SybDriver;
+//import com.sybase.jdbc4.jdbc.SybDriver;
 //import org.;
 // TODO: add mybatis
 import java.sql.*;
@@ -13,7 +13,6 @@ import java.util.Arrays;
  * set option public.allow_read_client_file = ON
  */
 public class DataConnect {
-    private static SybDriver sybDriver;
     private static Connection conn;
     private static String url, username, password;
 
