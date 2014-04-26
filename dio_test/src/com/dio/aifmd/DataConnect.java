@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 /**
  * Created by iovchynnikov on 4/23/14.
+ * To control who can use client-side bulk loads, use the secure feature (-sf) server startup switch, the ALLOW_READ_CLIENT_FILE database option, and/or the READCLIENTFILE access control.
+ * set option public.allow_read_client_file = ON
  */
 public class DataConnect {
     private static SybDriver sybDriver;
@@ -86,7 +88,7 @@ public class DataConnect {
         try {
             Statement sql = conn.createStatement();
             System.out.print("Deleting...");
-            Integer rowsCount = sql.executeUpdate("delete from t_Currency_Type where f_currency_type_id = 0");
+            Integer rowsCount = sql.executeUpdate("delete from t_Currency_Type where f_currency_type_id in (0, 998, 999)");
             System.out.println("done");
             result = rowsCount > 0;
         } catch (SQLException e) {
@@ -94,6 +96,27 @@ public class DataConnect {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private static boolean checkLoad() {
+        try {
+            Statement sql = conn.createStatement();
+            System.out.print("Loading...");
+            sql.addBatch("LOAD TABLE aifmd_dev.t_currency_type (f_currency_type_id, f_currency_type)\n" +
+                    "                    USING CLIENT FILE 'c:\\\\temp\\\\test.csv'\n" +
+                    "                    ESCAPES OFF QUOTES OFF \n" +
+                    "                    ROW DELIMITED BY '\\r\\n'\n" +
+                    "                    DELIMITED BY ','\n" +
+                    "                    MESSAGE LOG 'c:\\\\temp\\\\test.log' ROW LOG 'c:\\\\temp\\\\test.row'\n");
+            int[] rowsCount = sql.executeBatch();
+            System.out.println(Arrays.toString(rowsCount));
+            conn.rollback();
+        } catch (SQLException e) {
+            System.out.println("error");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private static void release() {
@@ -110,8 +133,10 @@ public class DataConnect {
     public static void main(String[] args) {
         if (!init())
             System.exit(0);
-        if (!checkQuery() || checkDelete())
+        if (!checkQuery() || checkDelete()){
             checkInsert();
+            checkLoad();
+        }
         release();
     }
 }
