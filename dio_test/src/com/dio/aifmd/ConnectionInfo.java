@@ -17,8 +17,8 @@ public class ConnectionInfo {
         this.ip = ip;
     }
 
-    public String getServerUrlTds () {
-        return String.format("%s:%d/%s?ENABLE_BULK_LOAD=true", server, port, databaseName);
+    public String getServerUrlJConnect () {
+        return String.format("%s:%d/%s?ENABLE_BULK_LOAD=true", ip, port, databaseName);
     }
 
     public String getServerUrlJdbc () {
