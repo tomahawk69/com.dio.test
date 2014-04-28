@@ -22,16 +22,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Sybase/SybaseIQ/jConnect-7_0/classes/jconn4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Lib/mybatis-3.2.7.jar!/" />
+          <root url="jar://$USER_HOME$/Lib/mybatis-3.2.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -49,11 +40,40 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Lib/Mockito/mockito-all-1.9.5.jar!/" />
+          <root url="jar://$USER_HOME$/Lib/Mockito/mockito-all-1.9.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Lib/Mockito/mockito-all-1.9.5.jar!/" />
+          <root url="jar://$USER_HOME$/Lib/Mockito/mockito-all-1.9.5.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/Bin/Java/mybatis-3.2.7/mybatis-3.2.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/Bin/Java/Mockito/mockito-all-1.9.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://D:/Bin/Java/Mockito/mockito-all-1.9.5.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

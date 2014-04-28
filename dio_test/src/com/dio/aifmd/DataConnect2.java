@@ -1,7 +1,5 @@
 package com.dio.aifmd;
 
-import com.sybase.jdbc4.jdbc.SybDriver;
-
 import java.sql.*;
 import java.util.Arrays;
 

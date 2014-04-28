@@ -2,9 +2,7 @@ package com.dio.test;
 
 import org.mockito.internal.util.collections.ListUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by yur on 21.04.2014.
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public class PojoPersonUtils3 {
 
-    private int length(List<Object> list) {
+    private int length(List<PojoPerson> list) {
         if (list == null)
             return 0;
         else
@@ -21,78 +19,66 @@ public class PojoPersonUtils3 {
     }
     /**
      * Full join
-     * Considerate nulls in parameters
-     * @param arr1 PojoPerson 1
-     * @param arr2 PojoPerson 2
+     * constructed from List.addAll
+     * @param list1 PojoPerson 1
+     * @param list2 PojoPerson 2
      * @return PojoPerson result
      */
-    public List<PojoPerson> joinFull(List<Object> list1, List<Object> list2) {
-        List<PojoPerson> result = new ArrayList<>(length(list1) + length(list2));
-        /*
-        if (arr1 != null)
-            System.arraycopy(arr1, 0, result, 0, length(arr1));
-        if (arr2 != null)
-            System.arraycopy(arr2, 0, result, length(arr1), length(arr2));
-        */
+    public List<PojoPerson> joinFull(List<PojoPerson> list1, List<PojoPerson> list2) {
+        List<PojoPerson> result = new ArrayList<>();
+        if (length(list1) > 0)
+            result.addAll(list1);
+        if (length(list2) > 0)
+            result.addAll(list2);
         return result;
     }
 
-    private PojoPerson[] scanDistinct(PojoPerson[] source, PojoPerson[] previous) {
-        PojoPerson[] result = new PojoPerson[0];
-//                Arrays.copyOf(previous, length(source) + length(previous));
-        int i = previous.length;
-//        for (PojoPerson item : source)
-//            if (!contains(result, item))
-//                result[i++] = item;
-        return Arrays.copyOf(result, i);
-    }
     /**
-     * Distinct join
-     * @param arr1 PojoPerson 1
-     * @param arr2 PojoPerson 2
-     * @return PojoPerson result
+     * Used set to make distinct list
+     * @param source
+     * @param previous
+     * @return set list created from a set
      */
-    public PojoPerson[] joinDistinct(PojoPerson[] arr1, PojoPerson[] arr2) {
-        return (scanDistinct(arr2, scanDistinct(arr1, new PojoPerson[0])));
+    private List<PojoPerson> distinct(List<PojoPerson> source, List<PojoPerson> previous) {
+        Set<PojoPerson> result = new HashSet<PojoPerson>(previous);
+        result.addAll(source);
+        return new ArrayList<PojoPerson>(result);
     }
+
 
     /**
      * Inner join
-     * @param arr1 PojoPerson 1
-     * @param arr2 PojoPerson 2
-     * @return PojoPerson result
+     * calculate result with an iterator
      */
-    public PojoPerson[] joinInner(PojoPerson[] arr1, PojoPerson[] arr2) {
-        PojoPerson[] temp = new PojoPerson[0];//length(arr1)];
-        int i = 0;
-        // pass only first array
-        if (arr1 != null)
-            for (PojoPerson s : arr1)
-                if (contains(arr2, s) && !contains(temp, s))
-                    temp[i++] = s;
-
-        return Arrays.copyOf(temp, i);
+    public List<PojoPerson> joinInner(List<PojoPerson> list1, List<PojoPerson> list2)  throws IllegalArgumentException {
+        if (list1 == null || list2 == null)
+            throw new IllegalArgumentException("Argument could not be null");
+        List<PojoPerson> result = new ArrayList<PojoPerson>(list1);
+        Iterator it = result.iterator();
+        while (it.hasNext()) {
+            if (!list2.contains(it.next()))
+                it.remove();
+        }
+        return result;
     }
 
-    private PojoPerson[] scanOuter(PojoPerson[] source, PojoPerson[] other, PojoPerson[] previous) {
-        PojoPerson[] result = Arrays.copyOf(previous, source.length);//length(source) + length(previous));
-        int i = previous.length;//length(previous);
-        for (PojoPerson item : source)
-            if (!contains(result, item) && (!contains(other, item)))
-                result[i++] = item;
-        return Arrays.copyOf(result, i);
-    }
     /**
      * Outer join
-     * @param arr1 PojoPerson 1
-     * @param arr2 PojoPerson 2
-     * @return PojoPerson result
+     * made with removeAll method and later full join results
      */
-    public PojoPerson[] joinOuter(PojoPerson[] arr1, PojoPerson[] arr2) {
-        return scanOuter(arr2, arr1, scanOuter(arr1, arr2, new PojoPerson[0]));
+    public List<PojoPerson> joinOuter(List<PojoPerson> list1, List<PojoPerson> list2)  throws IllegalArgumentException {
+        List<PojoPerson> result1 = new ArrayList<>(list1);
+        List<PojoPerson> result2 = new ArrayList<>(list2);
+        result1.removeAll(list2);
+        result2.removeAll(list1);
+        return joinFull(result1, result2);
     }
 
-    public boolean contains(PojoPerson[] persons, PojoPerson person) throws IllegalArgumentException {
+    /**
+     * Contains function for class
+     *
+     */
+    public boolean contains(List<PojoPerson> persons, PojoPerson person) throws IllegalArgumentException {
         if (persons == null)
             return false;
         if (person == null)
