@@ -34,6 +34,7 @@ public class DataConnect2 {
         return true;
     }
 
+
     public Connection getConn() {
         return conn;
     }
@@ -49,6 +50,7 @@ public class DataConnect2 {
         else
             // Jdbc
             result += connectionInfo.getServerUrlJdbc();
+        System.out.println(result);
         return result;
     }
 

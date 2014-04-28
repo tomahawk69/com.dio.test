@@ -37,7 +37,8 @@ public class PojoPersonHelperTest {
     @Test
     public void testRemoveDupes() throws Exception {
         when(utils.joinDistinct(persons1, null)).thenReturn(persons2);
-        assertArrayEquals("Mock data wong answer failed", helper.removeDupes(persons1), persons2);
+        PojoPerson[] result = helper.removeDupes(persons1);
+        assertArrayEquals("Mock data wong answer failed", result, persons2);
         verify(utils, times(1));
     }
 /*

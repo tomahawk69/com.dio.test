@@ -9,10 +9,15 @@ import org.junit.rules.ExpectedException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by iovchynnikov on 4/26/14.
@@ -135,6 +140,23 @@ public class DataOperationsTest {
         operations.performDelete(loadTable);
         assertTrue("Test load JDbc", operations.performLoad(loadQuery));
         dataJdbc.disconnect();
+    }
+
+    @Test
+    public void testPerformQueryMock() throws SQLException {
+        Connection testConn = mock(Connection.class);
+        Statement testStatement = mock(Statement.class);
+
+        dataJdbc = mock(DataConnect2.class);
+
+        when(dataJdbc.getConn()).thenReturn(testConn);
+        when(testConn.createStatement()).thenReturn(testStatement);
+
+//                (new ConnectionInfo("idas_dev", "dio32", 2638, "idas_dev", "AIFMD_DEV", "AIFMD_DEV1234!"), "SQL Anywhere 12", "jdbc:sqlanywhere:");
+        operations = new DataOperations(dataJdbc);
+
+
+
     }
 
 }
