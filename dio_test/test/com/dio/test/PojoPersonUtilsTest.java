@@ -1,7 +1,4 @@
 package com.dio.test;
-import com.dio.test.PojoPerson;
-import com.dio.test.PojoPersonUtils;
-import com.dio.test.EnumJob;
 
 import java.util.Arrays;
 

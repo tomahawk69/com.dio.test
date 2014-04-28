@@ -1,11 +1,13 @@
 package com.dio.aifmd;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.rules.ExpectedException;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class DataOperationsTest {
     private String selectQuery, loadQuery, loadTable;
 
     @Before
-    public void setUp() {
+    public void setUp() throws UnsupportedEncodingException {
         dataJdbc = new DataConnect2(new ConnectionInfo("idas_dev", "dio32", 2638, "idas_dev", "AIFMD_DEV", "AIFMD_DEV1234!"), "SQL Anywhere 12", "jdbc:sqlanywhere:");
         dataJConnect = new DataConnect2(new ConnectionInfo("idas_dev", "dio32", 2638, "idas_dev", "AIFMD_DEV", "AIFMD_DEV1234!"), null, "jdbc:sybase:Tds:");
         selectQuery = "select '1' as f_1, 2 as f_2, '3' as f_3, 4 as f_4";
@@ -80,7 +82,9 @@ public class DataOperationsTest {
                 ") \n" +
                 "USING CLIENT FILE \n" +
                 "'" + path + "'\n" +
-                "ESCAPES OFF;";
+                "ESCAPES OFF\n" +
+//                "ON FILE ERROR CONTINUE\n" +
+                "MESSAGE LOG 'c:\\temp\\test.log' ROW LOG 'c:\\temp\\test.row' ONLY LOG ALL";
     }
 
     @Test
