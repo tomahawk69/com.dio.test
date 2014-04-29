@@ -17,7 +17,9 @@ public class PojoPersonUtils3 {
      * @param list2 PojoPerson 2
      * @return PojoPerson result
      */
-    public List<PojoPerson> joinFull(List<PojoPerson> list1, List<PojoPerson> list2) {
+    public List<PojoPerson> joinFull(List<PojoPerson> list1, List<PojoPerson> list2) throws IllegalArgumentException {
+        if (list1 == null || list2 == null)
+            throw new IllegalArgumentException("Argument could not be null");
         List<PojoPerson> result = new ArrayList<>(list1);
         result.addAll(list2);
         return result;
@@ -42,6 +44,7 @@ public class PojoPersonUtils3 {
      * calculate result with an iterator
      */
     public List<PojoPerson> joinInner(List<PojoPerson> list1, List<PojoPerson> list2)  throws IllegalArgumentException {
+
         if (list1 == null || list2 == null)
             throw new IllegalArgumentException("Argument could not be null");
         List<PojoPerson> result = new ArrayList<PojoPerson>(list1);
