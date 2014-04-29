@@ -10,12 +10,6 @@ import java.util.*;
  */
 public class PojoPersonUtils3 {
 
-    private int length(List<PojoPerson> list) {
-        if (list == null)
-            return 0;
-        else
-            return list.size();
-    }
     /**
      * Full join
      * constructed from List.addAll
@@ -51,6 +45,7 @@ public class PojoPersonUtils3 {
         if (list1 == null || list2 == null)
             throw new IllegalArgumentException("Argument could not be null");
         List<PojoPerson> result = new ArrayList<PojoPerson>(list1);
+        //result.retainAll(list2);
         Iterator it = result.iterator();
         while (it.hasNext()) {
             if (!list2.contains(it.next()))
@@ -64,6 +59,8 @@ public class PojoPersonUtils3 {
      * made with removeAll method and later full join results
      */
     public List<PojoPerson> joinOuter(List<PojoPerson> list1, List<PojoPerson> list2)  throws IllegalArgumentException {
+        if (list1 == null || list2 == null)
+            throw new IllegalArgumentException("Argument could not be null");
         List<PojoPerson> result1 = new ArrayList<>(list1);
         List<PojoPerson> result2 = new ArrayList<>(list2);
         result1.removeAll(list2);

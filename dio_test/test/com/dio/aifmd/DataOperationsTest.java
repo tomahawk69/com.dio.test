@@ -9,6 +9,8 @@ import org.junit.rules.ExpectedException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,6 +40,8 @@ public class DataOperationsTest {
 
         String path = this.getClass().getResource("/formpf_Holdings_iGLS_PAULSON_20130630_20131021 1955.csv").getPath();
         File file = new File(path);
+        // required full access
+
         path = file.getAbsolutePath().replace("%20", " ").replace("\\", "\\\\");
 
         loadQuery = "load table " + loadTable + " (\n" +
