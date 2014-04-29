@@ -1,6 +1,5 @@
 package com.dio.test;
 
-import org.mockito.internal.util.collections.ListUtil;
 
 import java.util.*;
 
@@ -25,22 +24,20 @@ public class PojoPersonUtils3 {
      * @return PojoPerson result
      */
     public List<PojoPerson> joinFull(List<PojoPerson> list1, List<PojoPerson> list2) {
-        List<PojoPerson> result = new ArrayList<>();
-        if (length(list1) > 0)
-            result.addAll(list1);
-        if (length(list2) > 0)
-            result.addAll(list2);
+        List<PojoPerson> result = new ArrayList<>(list1);
+        result.addAll(list2);
         return result;
     }
 
     /**
      * Used set to make distinct list
-     * @param source
-     * @param previous
-     * @return set list created from a set
      */
-    private List<PojoPerson> distinct(List<PojoPerson> source, List<PojoPerson> previous) {
-        Set<PojoPerson> result = new HashSet<PojoPerson>(previous);
+    public List<PojoPerson> distinct(List<PojoPerson> source) {
+        return distinctPrevious(source, new ArrayList<PojoPerson>());
+    }
+
+    public List<PojoPerson> distinctPrevious(List<PojoPerson> source, List<PojoPerson> previous) {
+        Set<PojoPerson> result = new LinkedHashSet<PojoPerson>(previous);
         result.addAll(source);
         return new ArrayList<PojoPerson>(result);
     }
@@ -75,7 +72,7 @@ public class PojoPersonUtils3 {
     }
 
     /**
-     * Contains function for class
+     * Contains hand-made function
      *
      */
     public boolean contains(List<PojoPerson> persons, PojoPerson person) throws IllegalArgumentException {
