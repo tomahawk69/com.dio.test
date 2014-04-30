@@ -39,14 +39,16 @@ public class PojoPersonUtils3Test {
         personsVarious.add(new PojoPerson(firstName.toLowerCase(), middleName, lastName, EnumJob.DEVELOPER));
 
         personsSame = new ArrayList<>();
-        personsSame.add(new PojoPerson(firstName, middleName, lastName, EnumJob.DEVELOPER));
-        personsSame.add(new PojoPerson(firstName, middleName, lastName, EnumJob.DEVELOPER));
+        personsSame.add(new PojoPerson(firstName, middleName, lastName, EnumJob.QA));
+        personsSame.add(new PojoPerson(firstName, middleName, lastName, EnumJob.QA));
 
         testertester = new PojoPersonUtils3();
     }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    // Full joins tests
 
     @Test
     public void testJoinFull() throws Exception {
@@ -63,6 +65,7 @@ public class PojoPersonUtils3Test {
     }
 
 
+    // unite null tests?
     @Test
     public void testJoinFullNull1() throws Exception {
         thrown.expect(IllegalArgumentException.class);
@@ -77,9 +80,10 @@ public class PojoPersonUtils3Test {
         testertester.joinFull(null, list1);
     }
 
+    // unite blank tests?
     @Test
     public void testJoinFullBlank1() throws Exception {
-        List<PojoPerson> list1 = new ArrayList<PojoPerson>(persons1);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
         List<PojoPerson> list2 = new ArrayList<PojoPerson>();
 
         List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
@@ -94,7 +98,7 @@ public class PojoPersonUtils3Test {
 
     @Test
     public void testJoinFullBlank2() throws Exception {
-        List<PojoPerson> list1 = new ArrayList<PojoPerson>(persons1);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
         List<PojoPerson> list2 = new ArrayList<PojoPerson>();
 
         List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
@@ -120,6 +124,7 @@ public class PojoPersonUtils3Test {
         assertTrue("Full join PojoPersonUnit3 test immutable 1", list1.equals(list1Back));
         assertTrue("Full join PojoPersonUnit3 test immutable 2", list2.equals(list2Back));
     }
+
 
 
 
@@ -220,19 +225,91 @@ public class PojoPersonUtils3Test {
 
     // Outer join
 
-    //@Test
+    @Test
     public void testJoinOuter() throws Exception {
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>();
+        List<PojoPerson> list2 = new ArrayList<PojoPerson>();
+
+        List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
+        for (int i = 0; i < personsVarious.size(); i++) {
+            if (i % 2 == 1)
+                list2.add(personsVarious.get(i));
+            else
+                list1.add(personsVarious.get(i));
+        }
+        resultExpected.addAll(list1);
+        resultExpected.addAll(list2);
+
+        for (int i = 0; i < personsSame.size()/2; i++) {
+            list1.add(personsSame.get(i*2));
+            list2.add(personsSame.get(i*2+1));
+        }
+
+        List<PojoPerson> resultReceived = testertester.joinOuter(list1, list2);
+
+        assertTrue("Outer join PojoPersonUnit3 test positive", resultReceived.equals(resultExpected));
+    }
+
+    @Test
+    public void testJoinOuterNull1() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
+        testertester.joinOuter(list1, null);
+    }
+
+    @Test
+    public void testJoinOuterNull2() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
+        testertester.joinOuter(null, list1);
+    }
+
+    // unite blank tests?
+    @Test
+    public void testJoinOuterBlank1() throws Exception {
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
+        List<PojoPerson> list2 = new ArrayList<PojoPerson>();
+
         List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
 
-        resultExpected.add(persons1.get(0));
-        resultExpected.add(persons2.get(0));
-        resultExpected.add(persons2.get(1));
-        resultExpected.add(persons2.get(2));
+        resultExpected.addAll(list1);
+        resultExpected.addAll(list2);
 
-        List<PojoPerson> resultReceived = testertester.joinOuter(persons1, persons2);
+        List<PojoPerson> resultReceived = testertester.joinFull(list1, list2);
 
-        assertTrue("Outer join PojoPersonUnit3 test", resultReceived.equals(resultExpected));
+        assertTrue("Outer join PojoPersonUnit3 blank test 1", resultReceived.equals(resultExpected));
     }
+
+    @Test
+    public void testJoinOuterBlank2() throws Exception {
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
+        List<PojoPerson> list2 = new ArrayList<PojoPerson>();
+
+        List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
+
+        resultExpected.addAll(list1);
+        resultExpected.addAll(list2);
+
+        List<PojoPerson> resultReceived = testertester.joinFull(list1, list2);
+
+        assertTrue("Outer join PojoPersonUnit3 blank test 2", resultReceived.equals(resultExpected));
+    }
+
+    @Test
+    public void testJoinOuterImmutable() throws Exception {
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsSame);
+        List<PojoPerson> list2 = new ArrayList<PojoPerson>(personsVarious);
+
+        List<PojoPerson> list1Back = new ArrayList<PojoPerson>(list1);
+        List<PojoPerson> list2Back = new ArrayList<PojoPerson>(list2);
+
+        testertester.joinOuter(list2, list1);
+
+        assertTrue("Outer join PojoPersonUnit3 test immutable 1", list1.equals(list1Back));
+        assertTrue("Outer join PojoPersonUnit3 test immutable 2", list2.equals(list2Back));
+    }
+
+
 
     //@Test
     public void testContainsPositive() throws Exception {
