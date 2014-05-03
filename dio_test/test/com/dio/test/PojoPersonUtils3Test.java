@@ -1,15 +1,18 @@
 package com.dio.test;
 
 // delete old framework
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -17,9 +20,10 @@ import static org.mockito.Mockito.*;
  * Created by iovchynnikov on 4/29/14.
  */
 public class PojoPersonUtils3Test {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
     private List<PojoPerson> personsVarious, personsSame, persons1, persons2;
     private PojoPersonUtils3 testertester;
-
 
     @Before
     public void setUp() throws Exception {
@@ -31,12 +35,13 @@ public class PojoPersonUtils3Test {
         persons1 = new ArrayList<PojoPerson>();
         persons2 = new ArrayList<PojoPerson>();
 
-        personsVarious = new ArrayList<>();
-        personsVarious.add(new PojoPerson(firstName, middleName, lastName));
-        personsVarious.add(new PojoPerson(firstName, middleName, lastName, EnumJob.DEVELOPER));
-        personsVarious.add(new PojoPerson(firstName, middleName, lastName, EnumJob.DIRECTOR));
-        personsVarious.add(new PojoPerson(firstName, null, lastName, EnumJob.DEVELOPER));
-        personsVarious.add(new PojoPerson(firstName.toLowerCase(), middleName, lastName, EnumJob.DEVELOPER));
+        personsVarious = Arrays.asList(
+                new PojoPerson(firstName, middleName, lastName),
+                new PojoPerson(firstName, middleName, lastName, EnumJob.DEVELOPER),
+                new PojoPerson(firstName, middleName, lastName, EnumJob.DIRECTOR),
+                new PojoPerson(firstName, null, lastName, EnumJob.DEVELOPER),
+                new PojoPerson(firstName.toLowerCase(), middleName, lastName, EnumJob.DEVELOPER)
+        );
 
         personsSame = new ArrayList<>();
         personsSame.add(new PojoPerson(firstName, middleName, lastName, EnumJob.QA));
@@ -45,15 +50,13 @@ public class PojoPersonUtils3Test {
         testertester = new PojoPersonUtils3();
     }
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     // Full joins tests
 
     @Test
     public void testJoinFull() throws Exception {
-        List<PojoPerson> list1 = new ArrayList<PojoPerson>(persons1);
-        List<PojoPerson> list2 = new ArrayList<PojoPerson>(persons2);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
+        List<PojoPerson> list2 = new ArrayList<PojoPerson>(personsSame);
+
         List<PojoPerson> resultExpected = new ArrayList<PojoPerson>();
 
         resultExpected.addAll(list1);
@@ -61,7 +64,7 @@ public class PojoPersonUtils3Test {
 
         List<PojoPerson> resultReceived = testertester.joinFull(list1, list2);
 
-        assertTrue("Full join PojoPersonUnit3 test", resultReceived.equals(resultExpected));
+        assertEquals("Full join PojoPersonUnit3 test", resultReceived, resultExpected);
     }
 
 
@@ -69,14 +72,14 @@ public class PojoPersonUtils3Test {
     @Test
     public void testJoinFullNull1() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        List<PojoPerson> list1 = new ArrayList<PojoPerson>(persons1);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
         testertester.joinFull(list1, null);
     }
 
     @Test
     public void testJoinFullNull2() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        List<PojoPerson> list1 = new ArrayList<PojoPerson>(persons1);
+        List<PojoPerson> list1 = new ArrayList<PojoPerson>(personsVarious);
         testertester.joinFull(null, list1);
     }
 
@@ -126,8 +129,6 @@ public class PojoPersonUtils3Test {
     }
 
 
-
-
     // inner join tests
 
     @Test
@@ -143,10 +144,10 @@ public class PojoPersonUtils3Test {
                 list1.add(personsVarious.get(i));
         }
 
-        for (int i = 0; i < personsSame.size()/2; i++) {
-            list1.add(personsSame.get(i*2));
-            list2.add(personsSame.get(i*2+1));
-            resultExpected.add(personsSame.get(i*2));
+        for (int i = 0; i < personsSame.size() / 2; i++) {
+            list1.add(personsSame.get(i * 2));
+            list2.add(personsSame.get(i * 2 + 1));
+            resultExpected.add(personsSame.get(i * 2));
         }
 
         List<PojoPerson> resultReceived = testertester.joinInner(list1, list2);
@@ -240,9 +241,9 @@ public class PojoPersonUtils3Test {
         resultExpected.addAll(list1);
         resultExpected.addAll(list2);
 
-        for (int i = 0; i < personsSame.size()/2; i++) {
-            list1.add(personsSame.get(i*2));
-            list2.add(personsSame.get(i*2+1));
+        for (int i = 0; i < personsSame.size() / 2; i++) {
+            list1.add(personsSame.get(i * 2));
+            list2.add(personsSame.get(i * 2 + 1));
         }
 
         List<PojoPerson> resultReceived = testertester.joinOuter(list1, list2);
@@ -308,7 +309,6 @@ public class PojoPersonUtils3Test {
         assertTrue("Outer join PojoPersonUnit3 test immutable 1", list1.equals(list1Back));
         assertTrue("Outer join PojoPersonUnit3 test immutable 2", list2.equals(list2Back));
     }
-
 
 
     //@Test
