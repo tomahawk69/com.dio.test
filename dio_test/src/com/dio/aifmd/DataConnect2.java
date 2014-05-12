@@ -27,6 +27,7 @@ public class DataConnect2 {
         // assume driver absent is default for Tds
         if (driver == null) {
             //Class.forName("com.sybase.jdbc4.jdbc.SybDriver");
+            //Class.forName("sybase.jdbc4.sqlanywhere");
         }
         conn = DriverManager.getConnection(getConnectionUrl(), connectionInfo.getUser(), connectionInfo.getPwd());
         return true;

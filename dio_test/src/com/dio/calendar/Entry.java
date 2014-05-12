@@ -22,11 +22,11 @@ import java.util.List;
 public class Entry {
 
     private final String subject;
-    private final String description;
-    private final Date startDate;
-    private final Date endDate;
-    private final List<String> attenders;
-    private final List<Notification> notifications;
+    private String description;
+    private Date startDate;
+    private Date endDate;
+    private List<String> attenders;
+    private List<Notification> notifications;
 
     private Entry(Builder builder) {
         this.subject = builder.subject;
