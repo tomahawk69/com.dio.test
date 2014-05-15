@@ -48,7 +48,7 @@ public class DataConnect2Test {
         verify(connectionInfo).getPwd();
     }
 
-    @Test
+    //@Test
     public void testConnectJConnect() throws Exception {
 
         when(connectionInfo.getUser()).thenReturn(user);

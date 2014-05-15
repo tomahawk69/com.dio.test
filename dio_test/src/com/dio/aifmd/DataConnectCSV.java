@@ -33,15 +33,16 @@ public class DataConnectCSV {
             System.out.println(sql);
             stmt.execute(sql);
 
-            sql = "create table if not exists testUsers  (FirstName varchar(25), LastName varchar(25));";
+            sql = "create table if not exists testUsers  (FirstName varchar(25), LastName varchar(25), LastDate date, intNum integer, floatNum numeric(12,2));" +
+                    "";
             System.out.println(sql);
             stmt.execute(sql);
 
-            sql = "insert into testUsers values('John','Pull');";
+            sql = "insert into testUsers values('John','Pull', '2013-01-26', 10, 0.12);";
             System.out.println(sql);
             stmt.execute(sql);
 
-            sql = "insert into testUsers values('John Dow','Pull, me');";
+            sql = "insert into testUsers values('John Dow','Pull, me', null, null, null);";
             System.out.println(sql);
             stmt.execute(sql);
             stmt.close();

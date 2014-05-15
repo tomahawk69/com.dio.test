@@ -102,7 +102,7 @@ public class DataOperationsTest {
             dataJdbc.disconnect();
     }
 
-    @Test
+    //@Test
     public void testConnectJConnect() throws Exception {
         if (dataJConnect.connect())
             dataJConnect.disconnect();
@@ -116,7 +116,7 @@ public class DataOperationsTest {
         dataJdbc.disconnect();
     }
 
-    @Test
+    //@Test
     public void testPerformQueryJConnect() throws Exception {
         dataJConnect.connect();
         operations = new DataOperations(dataJConnect);
@@ -128,7 +128,7 @@ public class DataOperationsTest {
     public ExpectedException thrown = ExpectedException.none();
 
 
-    //@Test
+    ////@Test
     public void testPerformLoadJconnect() throws Exception {
         thrown.expect(java.sql.BatchUpdateException.class);
         dataJConnect.connect();

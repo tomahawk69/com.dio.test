@@ -26,8 +26,8 @@ public class DataConnect2 {
     public Boolean connect() throws ClassNotFoundException, SQLException {
         // assume driver absent is default for Tds
         if (driver == null) {
-            //Class.forName("com.sybase.jdbc4.jdbc.SybDriver");
-            //Class.forName("sybase.jdbc4.sqlanywhere");
+            //qClass.forName("com.sybase.jdbc4.jdbc.SybDriver");
+            Class.forName("ianywhere.ml.jdbcodbc.IDriver");
         }
         conn = DriverManager.getConnection(getConnectionUrl(), connectionInfo.getUser(), connectionInfo.getPwd());
         return true;
