@@ -2,6 +2,7 @@ package com.dio.test;
 
 
 import java.util.*;
+import java.io.*;
 
 /**
  * Created by yur on 21.04.2014.
@@ -89,4 +90,156 @@ public class PojoPersonUtils3 {
         return false;
     }
 
+    public static boolean saveObject(Object inputObject, String fileName) {
+        FileOutputStream fileStream = null;
+        try {
+            fileStream = new FileOutputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            objectStream.writeObject(inputObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static Object readObject(String fileName) {
+        FileInputStream fileStream = null;
+        try {
+            fileStream = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        Object result = null;
+        try {
+            ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+            result = objectStream.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean saveObjects(String fileName, Object... inputObjects) {
+        FileOutputStream fileStream = null;
+        try {
+            fileStream = new FileOutputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            objectStream.writeInt(inputObjects.length);
+            for (Object object : inputObjects) {
+                objectStream.writeObject(object);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static List<Object> readObjects(String fileName) {
+        FileInputStream fileStream = null;
+        try {
+            fileStream = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        List<Object> result = new LinkedList<>();
+        try {
+            ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+            int count = objectStream.readInt();
+            for (int i = 0; i < count; i++) {
+                result.add(objectStream.readObject());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean saveObjects2(String fileName, Object... inputObjects) {
+        FileOutputStream fileStream = null;
+        try {
+            fileStream = new FileOutputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            objectStream.writeObject(Arrays.asList(inputObjects));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static List<Object> readObjects2(String fileName) {
+        FileInputStream fileStream = null;
+        try {
+            fileStream = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        List<Object> result = null;
+        try {
+            ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+            result = (List<Object>) objectStream.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

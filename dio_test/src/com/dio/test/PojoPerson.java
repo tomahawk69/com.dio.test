@@ -1,14 +1,17 @@
 package com.dio.test;
 
+import java.io.*;
+
+
 /**
  * Created by iovchynnikov on 4/8/14.
  * Comparing strings test
  */
-public class PojoPerson {
+public class PojoPerson implements Serializable {
     final private String nameFirst;
     final private String nameMiddle;
     final private String nameLast;
-    private EnumJob job;
+    private transient EnumJob job;
 
 
     public PojoPerson(String pf, String pm, String pl) {
@@ -71,4 +74,20 @@ public class PojoPerson {
         sb.append('}');
         return sb.toString();
     }
+
+
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
+        String[] array = new String[]{nameFirst, nameMiddle, nameLast};
+        s.writeObject(array);
+        s.writeObject(job);
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        String[] array = (String[]) ois.readObject();
+        EnumJob job = (EnumJob) ois.readObject();
+        PojoPerson result = new PojoPerson(array[0], array[1], array[2], job);
+    }
+
 }
