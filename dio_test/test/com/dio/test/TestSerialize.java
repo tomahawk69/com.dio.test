@@ -2,6 +2,7 @@ package com.dio.test;
 
 import org.junit.Test;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -17,6 +18,7 @@ public class TestSerialize {
 
     private void cleanup(String fileName) {
         File file = new File(fileName);
+
         if (file.exists() && !file.isDirectory()) {
             file.delete();
         }

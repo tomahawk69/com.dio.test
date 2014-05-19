@@ -6,6 +6,16 @@ import java.io.*;
 /**
  * Created by iovchynnikov on 4/8/14.
  * Comparing strings test
+ *
+ * Create wrapper for builder
+ * Use JAXB for serializing
+ * Folder for events
+ * Save event by one
+ * Use nio
+ * Check readable file
+ * Load data on start
+ * Save data on add/edit/delete event through add/delete
+ *
  */
 public class PojoPerson implements Serializable {
     final private String nameFirst;
