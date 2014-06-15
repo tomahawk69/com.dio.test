@@ -1,6 +1,7 @@
 package com.dio.aifmd;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.dio.aifmd.crypto.CryptoLib;
+import com.dio.aifmd.crypto.FileService;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,19 +9,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RsaLibTest {
+public class CryptoLibTest {
 
     @Test
     public void isKeyExistsTestPositive() {
 
         String keyName = "key";
 
-        RsaFileService fileService = mock(RsaFileService.class);
-        RsaLib rsaLib = new RsaLib(fileService);
+        FileService fileService = mock(FileService.class);
+        KeyStore keyStore = mock(KeyStore.class);
+        CryptoLib cryptoLib = new CryptoLib(fileService);
+
 
         when(fileService.isKeyExists(keyName)).thenReturn(true);
 
-        Boolean result = rsaLib.isKeyExists(keyName);
+        Boolean result = cryptoLib.isKeyExists(keyName);
 
         assertTrue(result);
 
@@ -33,15 +36,15 @@ public class RsaLibTest {
         String keyName = "key";
         String keyContent = "keyFileName";
 
-        RsaFileService fileService = mock(RsaFileService.class);
-        RsaLib rsaLib = new RsaLib(fileService);
+        FileService fileService = mock(FileService.class);
+        CryptoLib cryptoLib = new CryptoLib(fileService);
 
 
         when(fileService.isKeyExists(keyName)).thenReturn(true);
         when(fileService.getKey(keyName)).thenReturn(keyContent);
 
-        Boolean result = rsaLib.loadKey(keyName);
-        Boolean result1 = rsaLib.isKeyLoaded(keyName);
+        Boolean result = cryptoLib.loadKey(keyName);
+        Boolean result1 = cryptoLib.isKeyLoaded(keyName);
 
         assertTrue(result);
 

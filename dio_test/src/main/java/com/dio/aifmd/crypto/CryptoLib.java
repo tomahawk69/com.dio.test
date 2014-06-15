@@ -1,33 +1,20 @@
-package com.dio.aifmd;
+package com.dio.aifmd.crypto;
 
 /**
  * Created by iovchynnikov on 6/13/2014.
  */
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
-
-
-import javax.crypto.Cipher;
 
 /**
  * @author JavaDigest+me
+ * http://www.herongyang.com/Cryptography/JCE-Cipher-Secret-Key-Encryption-Sample-Program.html
  *
  */
-public class RsaLib {
+public class CryptoLib {
     private Map<String, String> keys;
-    private final Logger logger = Logger.getLogger(RsaLib.class);
+    private final Logger logger = Logger.getLogger(CryptoLib.class);
 
     /**
      * String to hold name of the encryption algorithm.
@@ -43,10 +30,10 @@ public class RsaLib {
      * String to hold name of the public key file.
      */
     public static final String PUBLIC_KEY_FILE = "my.public";
-    private final RsaFileService fileService;
+    private final KeyStore keyStore;
 
-    public RsaLib(RsaFileService fileService) {
-        this.fileService = fileService;
+    public CryptoLib(KeyStore keyStore) {
+        this.keyStore = keyStore;
     }
 
 //    /**
@@ -166,20 +153,17 @@ public class RsaLib {
 //    }
 //
     public Boolean isKeyExists(String keyName) {
-        return fileService.isKeyExists(keyName);
+        return keyStore.isKeyExists(keyName);
     }
 
     public Boolean loadKey(String keyName) {
         try {
-            String key = fileService.getKey(keyName);
+            String key = keyStore.getKey(keyName);
+            return true;
         } catch (Exception e) {
             logger.error(e);
-            return false;
         }
-
-    }
-
-    public Boolean isKeyLoaded(String keyName) {
         return false;
     }
+
 }

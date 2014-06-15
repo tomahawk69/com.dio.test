@@ -1,18 +1,18 @@
-package com.dio.aifmd;
+package com.dio.aifmd.crypto;
 
 import java.nio.file.Path;
 
 /**
  * Created by iovchynnikov on 6/13/2014.
  */
-public class RsaFileService {
+public class FileService {
 
     private static final String PRIVATE_KEY_EXT = ".private";
     private static final String PUBLIC_KEY_EXT = ".public";
 
     private final Path storePath;
 
-    public RsaFileService(Path storePath) {
+    public FileService(Path storePath) {
         this.storePath = storePath;
     }
 
