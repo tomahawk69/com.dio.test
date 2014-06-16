@@ -1,7 +1,5 @@
 package com.dio.aifmd;
 
-import org.relique.jdbc.csv.CsvDriver;
-
 import java.sql.*;
 import java.util.Properties;
 

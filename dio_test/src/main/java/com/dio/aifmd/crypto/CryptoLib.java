@@ -30,10 +30,10 @@ public class CryptoLib {
      * String to hold name of the public key file.
      */
     public static final String PUBLIC_KEY_FILE = "my.public";
-    private final KeyStore keyStore;
+    private final CryptoKeyStore cryptoKeyStore;
 
-    public CryptoLib(KeyStore keyStore) {
-        this.keyStore = keyStore;
+    public CryptoLib(CryptoKeyStore cryptoKeyStore) {
+        this.cryptoKeyStore = cryptoKeyStore;
     }
 
 //    /**
@@ -152,18 +152,39 @@ public class CryptoLib {
 //        }
 //    }
 //
-    public Boolean isKeyExists(String keyName) {
-        return keyStore.isKeyExists(keyName);
+    public Boolean privateKeyExists(String keyName) {
+        return cryptoKeyStore.privateKeyExists(keyName);
     }
 
-    public Boolean loadKey(String keyName) {
-        try {
-            String key = keyStore.getKey(keyName);
-            return true;
-        } catch (Exception e) {
-            logger.error(e);
+    public Boolean publicKeyExists(String keyName) {
+        return cryptoKeyStore.publicKeyExists(keyName);
+    }
+
+//    public Boolean loadPrivateKey(String keyName) {
+//        if (!cryptoKeyStore.privateKeyExists(keyName)) {
+//            try {
+//                return cryptoKeyStore.loadPrivateKey(keyName);
+//            } catch (Exception e) {
+//                logger.error(e);
+//            }
+//            return false;
+//        } else {
+//            logger.warn("Key " + keyName + " already loaded");
+//            return true;
+//        }
+//    }
+//
+    public String decryptString(String keyContent, String cryptedString) {
+        String result = "";
+        return result;
+    }
+
+    public String decryptStringWithKey(String keyName, String cryptedString) {
+        if (privateKeyExists(keyName)) {
+            return decryptString(cryptoKeyStore.getPrivateKey(keyName), cryptedString);
+        } else {
+            return null;
         }
-        return false;
     }
 
 }
