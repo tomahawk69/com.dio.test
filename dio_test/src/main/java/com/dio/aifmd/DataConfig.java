@@ -9,7 +9,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.sql.SQLException;
 
 /**
@@ -24,7 +23,7 @@ public class DataConfig {
 
     public void write(PojoPerson inputObject) throws JAXBException {
         Marshaller marshaller = getMarshaller(PojoPersonWrapper.class);
-        StringWriter sw = new StringWriter();
+        StringWriter sw  = new StringWriter();
 
         PojoPersonWrapper wrapper = new PojoPersonWrapper(inputObject);
         marshaller.marshal(wrapper, sw);
