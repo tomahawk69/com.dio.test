@@ -3,9 +3,13 @@ package com.dio.aifmd.crypto;
 /**
  * Created by iovchynnikov on 6/13/2014.
  */
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import javax.crypto.Cipher;
 
 /**
  * @author JavaDigest+me
@@ -13,24 +17,11 @@ import org.apache.log4j.Logger;
  *
  */
 public class CryptoLib {
-    private Map<String, String> keys;
-    private final Logger logger = Logger.getLogger(CryptoLib.class);
-
-    /**
-     * String to hold name of the encryption algorithm.
-     */
     public static final String ALGORITHM = "RSA";
 
-    /**
-     * String to hold the name of the private key file.
-     */
-    public static final String PRIVATE_KEY_FILE = "my.private";
-
-    /**
-     * String to hold name of the public key file.
-     */
-    public static final String PUBLIC_KEY_FILE = "my.public";
     private final CryptoKeyStore cryptoKeyStore;
+    private Map<String, String> keys;
+    private final Logger logger = Logger.getLogger(CryptoLib.class);
 
     public CryptoLib(CryptoKeyStore cryptoKeyStore) {
         this.cryptoKeyStore = cryptoKeyStore;
@@ -160,31 +151,42 @@ public class CryptoLib {
         return cryptoKeyStore.publicKeyExists(keyName);
     }
 
-//    public Boolean loadPrivateKey(String keyName) {
-//        if (!cryptoKeyStore.privateKeyExists(keyName)) {
-//            try {
-//                return cryptoKeyStore.loadPrivateKey(keyName);
-//            } catch (Exception e) {
-//                logger.error(e);
-//            }
-//            return false;
-//        } else {
-//            logger.warn("Key " + keyName + " already loaded");
-//            return true;
-//        }
-//    }
-//
-    public String decryptString(String keyContent, String cryptedString) {
-        String result = "";
-        return result;
+    public String encryptStringWithKey(PublicKey keyContent, String decryptedString) {
+        byte[] cipherText = null;
+        try {
+            final Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, keyContent);
+            cipherText = cipher.doFinal(decryptedString.getBytes());
+        } catch (Exception e) {
+            logger.error("Encrypt error: " + e);
+            e.printStackTrace();
+        }
+        return cipherText.toString();
     }
 
-    public String decryptStringWithKey(String keyName, String cryptedString) {
-        if (privateKeyExists(keyName)) {
-            return decryptString(cryptoKeyStore.getPrivateKey(keyName), cryptedString);
-        } else {
-            return null;
+    public String encryptString(String key, String decryptedString) {
+        return encryptStringWithKey(cryptoKeyStore.getPublicKey(key), decryptedString);
+    }
+
+    public String decryptString(String key, String cryptedString) {
+        return decryptStringWithKey(cryptoKeyStore.getPrivateKey(key), cryptedString);
+    }
+
+    public String decryptStringWithKey(PrivateKey key, String cryptedString) {
+        byte[] dectyptedText = null;
+        try {
+            // get an RSA cipher object and print the provider
+            final Cipher cipher = Cipher.getInstance(ALGORITHM);
+
+            // decrypt the text using the private key
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            dectyptedText = cipher.doFinal(cryptedString.getBytes());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
+        return new String(dectyptedText);
     }
 
 }
