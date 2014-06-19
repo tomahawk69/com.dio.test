@@ -8,20 +8,20 @@ import java.rmi.RemoteException;
 public class TestInterfaceMain {
 
     public static void main(String[] args) {
-        TestInterface test1 = new TestInterfaceImpl();
+        TestInterfaceRemote test1 = new TestInterfaceRemoteImpl();
 
-        try {
-            test1.testSample();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        TestInterface test2 = new TestInterfaceImpl2();
-        try {
-            test2.testSample();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        TestInterfaceChild1 test3 = new TestInterfaceChild1Impl();
-        test3.testSample();
+//        try {
+//            test1.testSample();
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//        TestInterfaceRemote test2 = new TestInterfaceRemoteImpl2();
+//        try {
+//            test2.testSample();
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//        TestInterfaceSimple test3 = new TestInterfaceSimpleImpl();
+//        test3.testSample();
     }
 }

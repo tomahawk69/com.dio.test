@@ -1,22 +1,20 @@
 package com.dio.aifmd.crypto;
 
-import com.dio.aifmd.crypto.CryptoKeyStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.crypto.Cipher;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Map;
 
 /**
+ * Idea origin is from
  * http://www.herongyang.com/Cryptography/JCE-Cipher-Secret-Key-Encryption-Sample-Program.html
  */
 public class CryptoLib {
     public static final String ALGORITHM = "RSA";
     public static final String TRANSFORMATION_FORMAT = "UTF-8";
     private final CryptoKeyStore cryptoKeyStore;
-    private Map<String, String> keys;
     private final Logger logger = LogManager.getLogger(CryptoLib.class);
 
     public CryptoLib(CryptoKeyStore cryptoKeyStore) {
@@ -38,8 +36,7 @@ public class CryptoLib {
             cipher.init(Cipher.ENCRYPT_MODE, keyContent);
             cipherText = cipher.doFinal(valueToEncrypt.getBytes(TRANSFORMATION_FORMAT));
         } catch (Exception e) {
-            logger.error("Encrypt error: " + e);
-            e.printStackTrace();
+            logger.error(new StringBuilder("Encrypt error: ").append(e));
         }
         return cipherText;
     }
@@ -53,19 +50,15 @@ public class CryptoLib {
     }
 
     public String decryptStringWithKey(PrivateKey key, byte[] valueToDecrypt) {
-        byte[] dectyptedText;
+        String decryptedText = null;
         try {
-            // get an RSA cipher object and print the provider
             final Cipher cipher = Cipher.getInstance(ALGORITHM);
-            // decrypt the text using the private key
             cipher.init(Cipher.DECRYPT_MODE, key);
-            dectyptedText = cipher.doFinal(valueToDecrypt);
-            return new String(dectyptedText, TRANSFORMATION_FORMAT);
-        } catch (Exception ex) {
-            logger.error("Decrypt error: " + ex);
-            ex.printStackTrace();
+            decryptedText = new String(cipher.doFinal(valueToDecrypt), TRANSFORMATION_FORMAT);
+        } catch (Exception e) {
+            logger.error(new StringBuilder("Decrypt error: ").append(e));
         }
-        return null;
+        return decryptedText;
     }
 
 }
