@@ -1,5 +1,7 @@
 package com.dio.aifmd.crypto;
 
+import com.dio.aifmd.crypto.CryptoFileService;
+
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.HashMap;
@@ -19,26 +21,30 @@ public class CryptoKeyStore {
     }
 
     public PrivateKey getPrivateKey(String keyName) {
+        if(!privateKeyExists(keyName)) {
+            loadPrivateKey(keyName);
+        }
         return privateKeys.get(keyName);
     }
 
     public PublicKey getPublicKey(String keyName) {
+        if(!publicKeyExists(keyName)) {
+            loadPublicKey(keyName);
+        }
         return publicKeys.get(keyName);
     }
 
     public Boolean privateKeyExists(String keyName) {
-        Boolean result = privateKeys.containsKey(keyName);
-        return result;
+        return privateKeys.containsKey(keyName);
     }
 
     public Boolean publicKeyExists(String keyName) {
-        Boolean result = publicKeys.containsKey(keyName);
-        return result;
+        return publicKeys.containsKey(keyName);
     }
 
     public Boolean loadPrivateKey(String keyName) {
         try {
-            //privateKeys.put(keyName, cryptoFileService.loadPrivateKey(keyName));
+            privateKeys.put(keyName, cryptoFileService.loadPrivateKey(keyName));
             return true;
         } catch (Exception e) {
             return false;
@@ -47,7 +53,7 @@ public class CryptoKeyStore {
 
     public Boolean loadPublicKey(String keyName) {
         try {
-            //publicKeys.put(keyName, cryptoFileService.loadPublicKey(keyName));
+            publicKeys.put(keyName, cryptoFileService.loadPublicKey(keyName));
             return true;
         } catch (Exception e) {
             return false;
